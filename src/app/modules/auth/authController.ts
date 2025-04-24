@@ -3,43 +3,40 @@ import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
 import { AuthServices } from "./auth.service";
 import { sendEmail } from "../../utils/sendEmail";
-import { PasswordResetServices } from "../passwordReset/passwordReset.service";
 import config from "../../config";
-
 
 const login = catchAsync(async (req, res) => {
   const result = await AuthServices.checkLogin(req.body);
-  const { accessToken,refreshToken } = result;
+  const { accessToken, refreshToken } = result;
 
-  res.cookie('refreshToken', refreshToken, {
-    secure: config.NODE_ENV === 'production',
+  res.cookie("refreshToken", refreshToken, {
+    secure: config.NODE_ENV === "production",
     httpOnly: true,
-    sameSite: 'lax',
-    
+    sameSite: "lax",
   });
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: "Logged In Successfully",
     data: {
-      accessToken
+      accessToken,
     },
   });
 });
 
 const refreshToken = catchAsync(async (req, res) => {
-  const refreshToken = req.cookies.refreshToken
+  const refreshToken = req.cookies.refreshToken;
   if (!refreshToken) {
-    throw new Error('Invalid token')
+    throw new Error("Invalid token");
   }
-  const result = await AuthServices.refreshToken(refreshToken)
+  const result = await AuthServices.refreshToken(refreshToken);
 
   sendResponse(res, {
     statusCode: 200,
     success: true,
-    message: 'Token refreshed successfully',
+    message: "Token refreshed successfully",
     data: result,
-});
+  });
 });
 
 const googleLoginController = catchAsync(async (req, res) => {
@@ -56,9 +53,6 @@ const googleLoginController = catchAsync(async (req, res) => {
   });
 });
 
-
-
-
 const createUser = catchAsync(async (req, res) => {
   const result = await AuthServices.createUserIntoDB(req.body);
   // send welcome email to user
@@ -72,28 +66,28 @@ const createUser = catchAsync(async (req, res) => {
   });
 });
 
-const forgetPassword = catchAsync(async (req, res) => {
-  const email = req.body.email;
-  const result = await PasswordResetServices.requestOtp(email);
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "OTP Code is generated succesfully!",
-    data: result,
-  });
-});
+// const forgetPassword = catchAsync(async (req, res) => {
+//   const email = req.body.email;
+//   const result = await PasswordResetServices.requestOtp(email);
+//   sendResponse(res, {
+//     statusCode: httpStatus.OK,
+//     success: true,
+//     message: "OTP Code is generated succesfully!",
+//     data: result,
+//   });
+// });
 
-const validateReset = catchAsync(async (req, res) => {
-  const email = req.body.email;
-  const otp = req.body.otp;
-  const result = await PasswordResetServices.validateOtp(email, otp);
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "OTP Code is validated succesfully!",
-    data: result,
-  });
-});
+// const validateReset = catchAsync(async (req, res) => {
+//   const email = req.body.email;
+//   const otp = req.body.otp;
+//   const result = await PasswordResetServices.validateOtp(email, otp);
+//   sendResponse(res, {
+//     statusCode: httpStatus.OK,
+//     success: true,
+//     message: "OTP Code is validated succesfully!",
+//     data: result,
+//   });
+// });
 
 const resetPassword = catchAsync(async (req, res) => {
   const token = req.headers.authorization;
@@ -129,16 +123,14 @@ const emailVerifySendOtp = catchAsync(async (req, res) => {
   });
 });
 
-
-
 export const AuthControllers = {
   login,
   createUser,
-  forgetPassword,
+  // forgetPassword,
   resetPassword,
   googleLoginController,
-  validateReset,
+  // validateReset,
   verifyEmail,
   emailVerifySendOtp,
-  refreshToken
+  refreshToken,
 };

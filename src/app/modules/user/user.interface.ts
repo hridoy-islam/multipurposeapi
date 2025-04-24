@@ -17,9 +17,9 @@ export interface TUser {
   image?: string;
   phone?: string;
   googleUid?: string;
-  otp?:string;
-  refreshToken?:string;
-  otpExpires: Date | null; 
+  otp?: string;
+  refreshToken?: string;
+  otpExpires: Date | null;
 }
 
 export interface UserModel extends Model<TUser> {

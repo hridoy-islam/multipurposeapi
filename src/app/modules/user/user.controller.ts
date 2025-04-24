@@ -62,5 +62,5 @@ export const UserControllers = {
   getSingleUser,
   updateUser,
   getCompanyUser,
-  assignUser
+  assignUser,
 };

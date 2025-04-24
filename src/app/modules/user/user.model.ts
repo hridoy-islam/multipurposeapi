@@ -66,7 +66,7 @@ const userSchema = new Schema<TUser, UserModel>(
     },
     refreshToken: {
       type: String,
-      select:false
+      select: false,
     },
     otpExpires: { type: Date, required: false },
   },
