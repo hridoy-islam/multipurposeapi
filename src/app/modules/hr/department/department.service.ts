@@ -1,14 +1,16 @@
 import httpStatus from "http-status";
 
-import { Notice } from "./notice.model";
-import { TNotice } from "./notice.interface";
-import { NoticeSearchableFields } from "./notice.constant";
+
+
 import AppError from "../../../errors/AppError";
 import QueryBuilder from "../../../builder/QueryBuilder";
+import { DepartmentSearchableFields } from "./department.constant";
+import { Department } from "./department.model";
+import { TDepartment } from "./department.interface";
 
-const getAllNoticeFromDB = async (query: Record<string, unknown>) => {
-  const userQuery = new QueryBuilder(Notice.find(), query)
-    .search(NoticeSearchableFields)
+const getDepartmentFromDB = async (query: Record<string, unknown>) => {
+  const userQuery = new QueryBuilder(Department.find(), query)
+    .search(DepartmentSearchableFields)
     .filter()
     .sort()
     .paginate()
@@ -23,16 +25,16 @@ const getAllNoticeFromDB = async (query: Record<string, unknown>) => {
   };
 };
 
-const getSingleNoticeFromDB = async (id: string) => {
-  const result = await Notice.findById(id);
-  return result;
-};
+// const getSingleNoticeFromDB = async (id: string) => {
+//   const result = await Department.findById(id);
+//   return result;
+// };
 
 
-const createNoticeIntoDB = async (payload: TNotice) => {
+const createDepartmentIntoDB = async (payload: TDepartment) => {
     try {
       
-      const result = await Notice.create(payload);
+      const result = await Department.create(payload);
       return result;
     } catch (error: any) {
       console.error("Error in createNoticeIntoDB:", error);
@@ -47,8 +49,8 @@ const createNoticeIntoDB = async (payload: TNotice) => {
   };
 
 
-const updateNoticeIntoDB = async (id: string, payload: Partial<TNotice>) => {
-  const notice = await Notice.findById(id);
+const updateDepartmentIntoDB = async (id: string, payload: Partial<TDepartment>) => {
+  const notice = await Department.findById(id);
 
   if (!notice) {
     throw new AppError(httpStatus.NOT_FOUND, "Notice not found");
@@ -63,7 +65,7 @@ const updateNoticeIntoDB = async (id: string, payload: Partial<TNotice>) => {
   // }
 
   // Update only the selected user
-  const result = await Notice.findByIdAndUpdate(id, payload, {
+  const result = await Department.findByIdAndUpdate(id, payload, {
     new: true,
     runValidators: true,
   });
@@ -74,11 +76,10 @@ const updateNoticeIntoDB = async (id: string, payload: Partial<TNotice>) => {
 
 
 
-export const NoticeServices = {
-    getAllNoticeFromDB,
-    getSingleNoticeFromDB,
-    updateNoticeIntoDB,
-    createNoticeIntoDB
+export const DepartmentServices = {
+    getDepartmentFromDB,   
+    updateDepartmentIntoDB,
+    createDepartmentIntoDB
   
 };
 
