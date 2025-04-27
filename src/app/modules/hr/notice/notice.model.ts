@@ -25,7 +25,7 @@ const noticeSchema = new Schema<TNotice>(
     },
     status: {
       type: String,      
-      default: "upcoming",
+      default: "active",
     },  
    
    

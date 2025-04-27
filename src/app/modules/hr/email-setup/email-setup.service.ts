@@ -2,13 +2,14 @@ import httpStatus from "http-status";
 
 import AppError from "../../../errors/AppError";
 import QueryBuilder from "../../../builder/QueryBuilder";
-import { DepartmentSearchableFields } from "./department.constant";
-import { Department } from "./department.model";
-import { TDepartment } from "./department.interface";
 
-const getDepartmentFromDB = async (query: Record<string, unknown>) => {
-  const userQuery = new QueryBuilder(Department.find(), query)
-    .search(DepartmentSearchableFields)
+import { Email } from "./email-setup.model";
+import { EmailSearchableFields } from "./email-setup.constant";
+import { TEmail } from "./email-setup.interface";
+
+const getEmailFromDB = async (query: Record<string, unknown>) => {
+  const userQuery = new QueryBuilder(Email.find(), query)
+    .search(EmailSearchableFields)
     .filter()
     .sort()
     .paginate()
@@ -28,12 +29,12 @@ const getDepartmentFromDB = async (query: Record<string, unknown>) => {
 //   return result;
 // };
 
-const createDepartmentIntoDB = async (payload: TDepartment) => {
+const createEmailIntoDB = async (payload: TEmail) => {
   try {
-    const result = await Department.create(payload);
+    const result = await Email.create(payload);
     return result;
   } catch (error: any) {
-    console.error("Error in createNoticeIntoDB:", error);
+    console.error("Error in createEmailIntoDB:", error);
 
     // Throw the original error or wrap it with additional context
     if (error instanceof AppError) {
@@ -42,19 +43,16 @@ const createDepartmentIntoDB = async (payload: TDepartment) => {
 
     throw new AppError(
       httpStatus.INTERNAL_SERVER_ERROR,
-      error.message || "Failed to create Notice"
+      error.message || "Failed to create Email"
     );
   }
 };
 
-const updateDepartmentIntoDB = async (
-  id: string,
-  payload: Partial<TDepartment>
-) => {
-  const notice = await Department.findById(id);
+const updateEmailIntoDB = async (id: string, payload: Partial<TEmail>) => {
+  const notice = await Email.findById(id);
 
   if (!notice) {
-    throw new AppError(httpStatus.NOT_FOUND, "Notice not found");
+    throw new AppError(httpStatus.NOT_FOUND, "Email not found");
   }
 
   // Toggle `isDeleted` status for the selected user only
@@ -66,7 +64,7 @@ const updateDepartmentIntoDB = async (
   // }
 
   // Update only the selected user
-  const result = await Department.findByIdAndUpdate(id, payload, {
+  const result = await Email.findByIdAndUpdate(id, payload, {
     new: true,
     runValidators: true,
   });
@@ -74,8 +72,8 @@ const updateDepartmentIntoDB = async (
   return result;
 };
 
-export const DepartmentServices = {
-  createDepartmentIntoDB,
-  getDepartmentFromDB,
-  updateDepartmentIntoDB,
+export const EmailServices = {
+  createEmailIntoDB,
+  getEmailFromDB,
+  updateEmailIntoDB,
 };

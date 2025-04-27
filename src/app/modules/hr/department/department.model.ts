@@ -12,7 +12,7 @@ const departmentSchema = new Schema<TDepartment>(
     }, 
     status: {
       type: String,      
-      default: "inactive",
+      default: "active",
     },  
    
    
