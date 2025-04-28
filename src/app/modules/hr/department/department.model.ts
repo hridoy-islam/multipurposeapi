@@ -23,5 +23,4 @@ const departmentSchema = new Schema<TDepartment>(
 );
 
 
-
 export const Department = model<TDepartment>("Department", departmentSchema);

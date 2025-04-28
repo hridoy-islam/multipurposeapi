@@ -8,7 +8,7 @@ import { upload } from "../../utils/multer";
 const router = express.Router();
 router.get(
   "/",
-  auth("admin", "company", "creator", "user", "director"),
+  // auth("admin", "company", "creator", "user", "director"),
   UserControllers.getAllUser
 );
 router.get(
