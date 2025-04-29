@@ -1,37 +1,33 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import express from "express";
-import { VacancyControllers } from "./vacancy.controller";
+import { RecruitmentControllers } from "./recruitment.controller";
+
+
 
 
 const router = express.Router();
-
 router.get(
   "/",
 //   auth("admin", "company", "creator", "user", "director"),
-VacancyControllers.getAllVacancy
+  RecruitmentControllers.getAllRecruitment
 );
-
-
 router.get(
   "/:id",
 //   auth("admin", "user", "director", "company", "creator"),
-VacancyControllers.getSingleVacancy
+RecruitmentControllers.getSingleRecruitment
 );
-
-
 router.post(
   "/",
 //   auth("admin", "user", "director", "company", "creator"),
-VacancyControllers.createVacancy
+RecruitmentControllers.createRecruitment
 );
-
 
 router.patch(
   "/:id",
 //   auth("admin", "user", "creator", "company", "director"),
-VacancyControllers.updateVacancy
+RecruitmentControllers.updateRecruitment
 );
 
 
 
-export const VacancyRoutes = router;
+export const RecruitmentRoutes = router;

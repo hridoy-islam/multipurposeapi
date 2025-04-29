@@ -7,8 +7,7 @@ const VacancySchema = new Schema<TVacancy>(
     description: { type: String, required: true },
     location: { type: String },
     employmentType: {
-      type: String,
-      enum: ["full_time", "part_time", "contract", "internship"],
+      type: String,      
       required: true,
     },
     salaryRange: {
@@ -16,7 +15,7 @@ const VacancySchema = new Schema<TVacancy>(
       max: { type: Number },
       negotiable: Boolean,
     },
-    skillsRequired: [{ type: String }],
+    skillsRequired: { type: String },
     applicationDeadline: { type: Date },
     postedBy: { type: Schema.Types.ObjectId, ref: "User", required: true },
     status: { type: String, enum: ["active", "closed"], default: "active" },

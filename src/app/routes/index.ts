@@ -5,6 +5,11 @@ import { NoticeRoutes } from "../modules/hr/notice/notice.router";
 import { DepartmentRoutes } from "../modules/hr/department/department.router";
 import { EmailRoutes } from "../modules/hr/email-setup/email-setup.router";
 import { AttendanceRoutes } from "../modules/hr/attendance/attendance.router";
+import { VacancyRoutes } from "../modules/hr/vacancy/vacancy.router";
+import { ApplicantRoutes } from "../modules/hr/applicant/applicant.router";
+import { RecruitmentRoutes } from "../modules/hr/recruitment/recruitment.router";
+import { TrainingRoutes } from "../modules/hr/training/training.router";
+import { DesignationRoutes } from "../modules/hr/designation/designation.router";
 
 const router = Router();
 
@@ -32,6 +37,27 @@ const moduleRoutes = [
   {
     path: "/hr/attendance",
     route: AttendanceRoutes,
+  },
+  {
+    path: "/hr/vacancy",
+    route: VacancyRoutes,
+  },
+ 
+  {
+    path: "/hr/applicant",
+    route: ApplicantRoutes,
+  },
+  {
+    path: "/hr/recruitment",
+    route: RecruitmentRoutes,
+  },
+  {
+    path: "/hr/training",
+    route: TrainingRoutes,
+  },
+  {
+    path: "/hr/designation",
+    route: DesignationRoutes,
   },
 ];
 
