@@ -3,8 +3,6 @@ import express from "express";
 import { RecruitmentControllers } from "./recruitment.controller";
 
 
-
-
 const router = express.Router();
 router.get(
   "/",
