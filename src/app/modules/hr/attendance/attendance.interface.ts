@@ -1,19 +1,22 @@
 import { Types } from "mongoose";
 
 export interface TAttendance {
-  _id: Types.ObjectId;
-  userId: string;
+ 
+  userId: Types.ObjectId;
   clockIn: Date;
+
   clockOut?: Date;
   location?: {
     latitude?: number;
     longitude?: number;
     address?: string;
   };
-  source: "access_control" | "desktop_app" | "mobile_app";
+  eventType: "clock_in" | "clock_out";
+  clockType?: "face" | "qr" | "pin" | "manual";
+  source: "accessControl" | "desktopApp" | "mobileApp";
   deviceId?: string;
-  approvalRequired: boolean;
-  approvalStatus: "pending" | "approved" | "rejected";
+  approvalRequired?: boolean;
+  approvalStatus?: "pending" | "approved" | "rejected";
   approvedBy?: string;
   approvedAt?: Date;
   notes?: string;
@@ -25,6 +28,6 @@ export interface TAttendance {
     url: string;
     capturedAt : Date;
   }[];
-  createdAt?: Date;
-  updatedAt?: Date;
+  timestamp: Date
+  
 }

@@ -12,7 +12,7 @@ const departmentSchema = new Schema<TDepartment>(
     }, 
     description: {
       type: String,
-      required: true,
+    
     }, 
     status: {
       type: String,      

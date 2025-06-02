@@ -1,8 +1,6 @@
 import bcrypt from "bcrypt";
 import { Schema, model } from "mongoose";
-import config from "../../config";
-import { TUser, UserModel } from "./user.interface";
-import { UserStatus } from "./user.constant";
+import { TUser, UserModel } from "../../user/user.interface";
 
 const RightToWorkSchema = new Schema({
   hasExpiry: {
@@ -19,7 +17,7 @@ const PayrollSchema = new Schema({
   },
   paymentMethod: {
     type: String,
-    
+    enum: ["bank-transfer", "cheque", "cash"],
   },
 });
 
@@ -39,39 +37,57 @@ const EqualityInformationSchema = new Schema({
 });
 
 const AddressSchema = new Schema({
-  line1: { type: String },
-  line2: { type: String },
-  city: { type: String },
-  state: { type: String },
-  postCode: { type: String },
-  country: { type: String }
+  line1: {
+    type: String,
+  },
+  line2: {
+    type: String,
+  },
+  city: {
+    type: String,
+  },
+  state: {
+    type: String,
+  },
+  postCode: {
+    type: String,
+  },
+  country: {
+    type: String,
+  },
 });
 
 const BeneficiarySchema = new Schema({
-  fullName: { type: String },
-  relationship: { type: String },
-  email: { type: String },
-  mobile: { type: String },
-  sameAddress: { type: Boolean, default: false },
+  fullName: {
+    type: String,
+  },
+  relationship: {
+    type: String,
+  },
+  email: {
+    type: String,
+  },
+  mobile: {
+    type: String,
+  },
+  sameAddress: {
+    type: Boolean,
+  },
   address: {
     type: AddressSchema,
-    validate: {
-      validator: function (value: any) {
-        // If sameAddress is false, address must be a non-empty object
-        if (!this.sameAddress) {
-          return value && Object.keys(value).length > 0;
-        }
-        return true;
-      },
-      message: 'Address is required when sameAddress is false.'
-    }
-  }
+    required: function (this: any) {
+      return !this.sameAddress;
+    },
+  },
 });
-
 
 const userSchema = new Schema<TUser, UserModel>(
   {
- 
+    // Existing User fields
+    name: {
+      type: String,
+      required: true,
+    },
     email: {
       type: String,
       required: true,
@@ -131,26 +147,26 @@ const userSchema = new Schema<TUser, UserModel>(
     },
     accountNo: { type: String },
     sortCode: { type: String },
+    beneficiary: { type: String },
     otpExpires: { type: Date, required: false },
-    
-    beneficiary: { type: BeneficiarySchema },
- 
+
+    // Fields from Employee model
+    vacancyId: {
+      type: Schema.Types.ObjectId,
+      ref: "Vacancy",
+    },
+
     title: {
       type: String,
-      required:true
-
     },
     firstName: {
       type: String,
-      required:true
     },
     initial: {
       type: String,
     },
     lastName: {
       type: String,
-      required:true
-
     },
     dateOfBirth: {
       type: Date,
@@ -266,19 +282,6 @@ const userSchema = new Schema<TUser, UserModel>(
     detailedBeneficiary: {
       type: BeneficiarySchema,
     },
-
-    departmentId:{
-      type: Schema.Types.ObjectId,
-      ref:"Department"
-    },
-    trainingId:[{
-      type: Schema.Types.ObjectId,
-      ref:"Training"
-    }],
-    designationId:{
-      type: Schema.Types.ObjectId,
-      ref:"Designation"
-    }
   },
   {
     timestamps: true,

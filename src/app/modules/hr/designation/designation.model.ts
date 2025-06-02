@@ -20,7 +20,7 @@ const designationSchema = new Schema<TDesignation>(
         canEdit: { type: Boolean, default: false },
         canDelete: { type: Boolean, default: false },
       }),
-      default: {}
+      
     }
   },
   {

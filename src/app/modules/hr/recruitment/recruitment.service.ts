@@ -7,7 +7,19 @@ import { RecruitmentSearchableFields } from "./recruitment.constant";
 import { TRecruitment } from "./recruitment.interface";
 
 const getAllRecruitmentFromDB = async (query: Record<string, unknown>) => {
-  const userQuery = new QueryBuilder(Recruitment.find(), query)
+  const userQuery = new QueryBuilder(
+    Recruitment.find().populate({
+      path: 'applicantId',
+      
+      populate: {
+        path: 'vacancyId',
+        select: 'title'
+      }
+    }),
+    query
+  )
+  
+  
     .search(RecruitmentSearchableFields)
     .filter()
     .sort()

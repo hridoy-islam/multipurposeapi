@@ -1,11 +1,11 @@
-import { model, Schema } from "mongoose";
+import mongoose, { model, Schema } from "mongoose";
 import { TApplicant } from "./applicant.interface";
 import { string } from "zod";
 
 const applicantSchema = new Schema<TApplicant>(
   {
     vacancyId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "Vacancy"
     },

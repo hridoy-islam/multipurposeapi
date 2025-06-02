@@ -7,16 +7,24 @@ import { TAttendance } from "./attendance.interface";
 const attendanceSchema = new Schema<TAttendance>(
   {
     userId: {
-      type: String,
+      type: Schema.Types.ObjectId,
       required: true,
       ref: "User",
     },
     clockIn: {
       type: Date,
-      required: true,
     },
     clockOut: {
       type: Date,
+    },
+    eventType: {
+      type: String,
+      enum: ["clock_in", "clock_out"],
+    },
+    clockType: {
+      type: String,
+      enum: ["face", "qr", "pin", "manual"],
+
     },
     location: {
       latitude: { type: Number },
@@ -25,7 +33,7 @@ const attendanceSchema = new Schema<TAttendance>(
     },
     source: {
       type: String,
-      default: "mobile_app",
+      enum: ["accessControl", "desktopApp", "mobileApp"],
     },
     deviceId: {
       type: String,
@@ -35,9 +43,11 @@ const attendanceSchema = new Schema<TAttendance>(
     },
     approvalStatus: {
       type: String,
+      enum: ["pending", "approved", "rejected"],
     },
     approvedBy: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: "User",
     },
     approvedAt: {
       type: Date,
@@ -57,6 +67,9 @@ const attendanceSchema = new Schema<TAttendance>(
         capturedAt: { type: Date, default: Date.now },
       },
     ],
+    timestamp:{
+      type: Date
+    }
   },
   {
     timestamps: true,

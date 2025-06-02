@@ -3,7 +3,7 @@ import { Types } from "mongoose";
 
 export interface TRecruitment {
   _id: Types.ObjectId;
-  applicantId: string; // linked applicant
+  applicantId: Types.ObjectId; // linked applicant
   availableFrom: Date;
   startDate: Date;
   wtrDocumentUrl?: string; // WTR = Working Time Regulation Document

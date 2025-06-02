@@ -1,4 +1,4 @@
 
   
-  export const ApplicantSearchableFields = ["vacancyId","title", "firstName", "status", ];
+  export const ApplicantSearchableFields = ["title", "firstName", "email", ];
   

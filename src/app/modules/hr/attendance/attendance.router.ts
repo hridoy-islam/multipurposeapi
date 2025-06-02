@@ -18,7 +18,7 @@ router.get(
 AttendanceControllers.getSingleAttendance
 );
 router.post(
-  "/clock-in",
+  "/clock-event",
 //   auth("admin", "user", "director", "company", "creator"),
 AttendanceControllers.createAttendance
 );
@@ -31,7 +31,7 @@ AttendanceControllers.updateAttendance
 
 
 router.patch(
-  "/clock-out/:attendanceId",
+  "/clock-event/:attendanceId",
 //   auth("admin", "user", "creator", "company", "director"),
 AttendanceControllers.clockOutAttendance
 );

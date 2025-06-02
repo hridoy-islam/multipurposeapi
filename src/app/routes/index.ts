@@ -10,6 +10,8 @@ import { ApplicantRoutes } from "../modules/hr/applicant/applicant.router";
 import { RecruitmentRoutes } from "../modules/hr/recruitment/recruitment.router";
 import { TrainingRoutes } from "../modules/hr/training/training.router";
 import { DesignationRoutes } from "../modules/hr/designation/designation.router";
+import { ShiftRoutes } from "../modules/hr/shift/shift.router";
+import { EmployeeRateRoutes } from "../modules/hr/employeeRate/employeeRate.router";
 
 const router = Router();
 
@@ -58,6 +60,14 @@ const moduleRoutes = [
   {
     path: "/hr/designation",
     route: DesignationRoutes,
+  },
+  {
+    path: "/hr/shift",
+    route: ShiftRoutes,
+  },
+  {
+    path: "/hr/employeeRate",
+    route: EmployeeRateRoutes,
   },
 ];
 

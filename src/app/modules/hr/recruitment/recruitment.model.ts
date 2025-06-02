@@ -6,7 +6,7 @@ import { TRecruitment } from "./recruitment.interface";
 const recruitmentSchema = new Schema<TRecruitment>(
   {
     applicantId: {
-      type: String,
+      type: Schema.Types.ObjectId,
       required: true,
       ref: "Applicant"
     },

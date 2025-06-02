@@ -184,10 +184,15 @@ const googleLogin = async (payload: {
 const createUserIntoDB = async (payload: TCreateUser) => {
   const user = await User.isUserExists(payload.email);
   if (user) {
-    throw new AppError(httpStatus.NOT_FOUND, "This user is already exits!");
+    throw new AppError(httpStatus.NOT_FOUND, "This user already exists!");
   }
 
+  // Set fallback password if not provided
+  if (!payload.password) {
+    payload.password = "123456";
+  }
 
+ 
   const otp = generateOTP();
   const newUserPayload = {
     ...payload,
@@ -198,19 +203,18 @@ const createUserIntoDB = async (payload: TCreateUser) => {
 
   try {
     // await sendEmail(
-    //   payload.email,             
-    //   'welcome_template',                 
-    //   'Welcome to Task Planner', 
-    //   payload.name               
+    //   payload.email,
+    //   'welcome_template',
+    //   'Welcome to Task Planner',
+    //   payload.name
     // );
-
-    await sendEmail(payload.email, 'welcome_template', "Welcome to Task Planner", payload.name);
   } catch (error) {
     console.error('Error sending welcome email:', error);
   }
 
   return result;
 };
+
 
 const EmailSendOTP = async (email: string) => {
   const user = await User.isUserExists(email);

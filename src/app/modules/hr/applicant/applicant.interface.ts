@@ -2,7 +2,7 @@ import { Types } from "mongoose";
 
 export interface TApplicant {
   _id: Types.ObjectId;
-  vacancyId: string; // reference to vacnancy
+  vacancyId: Types.ObjectId; // reference to vacnancy
   // stage - 1  // Personal Details
   profilePictureUrl?: string; // Uploaded profile photo URL (optional)
   

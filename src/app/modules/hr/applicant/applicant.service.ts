@@ -1,6 +1,5 @@
 import httpStatus from "http-status";
 
-
 import AppError from "../../../errors/AppError";
 import QueryBuilder from "../../../builder/QueryBuilder";
 import { Applicant } from "./applicant.model";
@@ -29,26 +28,29 @@ const getSingleApplicantFromDB = async (id: string) => {
   return result;
 };
 
-
 const createApplicantIntoDB = async (payload: TApplicant) => {
-    try {
-      
-      const result = await Applicant.create(payload);
-      return result;
-    } catch (error: any) {
-      console.error("Error in createApplicantIntoDB:", error);
-  
-      // Throw the original error or wrap it with additional context
-      if (error instanceof AppError) {
-        throw error;
-      }
-  
-      throw new AppError(httpStatus.INTERNAL_SERVER_ERROR, error.message || "Failed to create Applicant");
+  try {
+    const result = await Applicant.create(payload);
+    return result;
+  } catch (error: any) {
+    console.error("Error in createApplicantIntoDB:", error);
+
+    // Throw the original error or wrap it with additional context
+    if (error instanceof AppError) {
+      throw error;
     }
-  };
 
+    throw new AppError(
+      httpStatus.INTERNAL_SERVER_ERROR,
+      error.message || "Failed to create Applicant"
+    );
+  }
+};
 
-const updateApplicantIntoDB = async (id: string, payload: Partial<TApplicant>) => {
+const updateApplicantIntoDB = async (
+  id: string,
+  payload: Partial<TApplicant>
+) => {
   const applicant = await Applicant.findById(id);
 
   if (!applicant) {
@@ -72,11 +74,9 @@ const updateApplicantIntoDB = async (id: string, payload: Partial<TApplicant>) =
   return result;
 };
 
-
 export const ApplicantServices = {
-    getAllApplicantFromDB,
-    getSingleApplicantFromDB,
-    updateApplicantIntoDB,
-    createApplicantIntoDB
-  
+  getAllApplicantFromDB,
+  getSingleApplicantFromDB,
+  updateApplicantIntoDB,
+  createApplicantIntoDB,
 };
