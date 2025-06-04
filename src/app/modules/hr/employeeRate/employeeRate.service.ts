@@ -8,7 +8,10 @@ import { EmployeeRateSearchableFields } from "./employeeRate.constant";
 
 
 const getAllEmployeeRateFromDB = async (query: Record<string, unknown>) => {
-  const userQuery = new QueryBuilder(EmployeeRate.find(), query)
+  const userQuery = new QueryBuilder(
+    EmployeeRate.find().populate("shiftId"),
+    query
+  )
     .search(EmployeeRateSearchableFields)
     .filter()
     .sort()
@@ -25,7 +28,7 @@ const getAllEmployeeRateFromDB = async (query: Record<string, unknown>) => {
 };
 
 const getSingleEmployeeRateFromDB = async (id: string) => {
-  const result = await EmployeeRate.findById(id);
+  const result = await EmployeeRate.findById(id).populate("shiftId"); 
   return result;
 };
 

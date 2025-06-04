@@ -19,7 +19,12 @@ const getAttendanceFromDB = async (query: Record<string, unknown>) => {
   const { month, year,fromDate, toDate, ...otherQueryParams } = query;
 
   // Create a basic query without date filtering
-  const userQuery = new QueryBuilder(Attendance.find().populate('userId'), otherQueryParams)
+  const userQuery = new QueryBuilder(Attendance.find().populate('userId').populate({
+    path: 'userId',
+    populate: {
+      path: 'departmentId'
+    }
+  }), otherQueryParams)
     .search(AttendanceSearchableFields)
     .filter()
     .sort()

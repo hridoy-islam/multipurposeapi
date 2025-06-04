@@ -71,7 +71,8 @@ const BeneficiarySchema = new Schema({
 
 const userSchema = new Schema<TUser, UserModel>(
   {
- 
+    name: { type: String },
+
     email: {
       type: String,
       required: true,
@@ -132,25 +133,20 @@ const userSchema = new Schema<TUser, UserModel>(
     accountNo: { type: String },
     sortCode: { type: String },
     otpExpires: { type: Date, required: false },
-    
+
     beneficiary: { type: BeneficiarySchema },
- 
+
     title: {
       type: String,
-      required:true
-
     },
     firstName: {
       type: String,
-      required:true
     },
     initial: {
       type: String,
     },
     lastName: {
       type: String,
-      required:true
-
     },
     dateOfBirth: {
       type: Date,
@@ -267,18 +263,20 @@ const userSchema = new Schema<TUser, UserModel>(
       type: BeneficiarySchema,
     },
 
-    departmentId:{
+    departmentId: {
       type: Schema.Types.ObjectId,
-      ref:"Department"
+      ref: "Department",
     },
-    trainingId:[{
+    trainingId: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Training",
+      },
+    ],
+    designationId: {
       type: Schema.Types.ObjectId,
-      ref:"Training"
-    }],
-    designationId:{
-      type: Schema.Types.ObjectId,
-      ref:"Designation"
-    }
+      ref: "Designation",
+    },
   },
   {
     timestamps: true,
