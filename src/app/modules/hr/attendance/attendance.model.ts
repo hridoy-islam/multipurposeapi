@@ -19,7 +19,7 @@ const attendanceSchema = new Schema<TAttendance>(
     },
     eventType: {
       type: String,
-      enum: ["clock_in", "clock_out"],
+      enum: ["clock_in", "clock_out","manual"],
     },
     clockType: {
       type: String,

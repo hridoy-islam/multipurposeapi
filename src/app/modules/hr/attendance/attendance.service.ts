@@ -153,6 +153,29 @@ const createAttendanceIntoDB = async (payload: Partial<TAttendance>) => {
       return result;
     }
 
+    if (eventType === "manual") {
+  if (!payload.clockIn || !payload.clockOut) {
+    throw new AppError(httpStatus.BAD_REQUEST, "clockIn and clockOut are required for manual_entry");
+  }
+
+  const sessionData: Partial<TAttendance> = {
+    userId,
+    clockIn: payload.clockIn,
+    clockOut: payload.clockOut,
+    eventType,
+    source,
+  };
+
+  if (clockType) sessionData.clockType = clockType;
+  if (deviceId) sessionData.deviceId = deviceId;
+  if (location) sessionData.location = location;
+  if (screenshots) sessionData.screenshots = screenshots;
+  if (notes) sessionData.notes = notes;
+
+  const result = await Attendance.create(sessionData);
+  return result;
+}
+
     throw new AppError(httpStatus.BAD_REQUEST, "Invalid eventType");
   } catch (error: any) {
     console.error("Error in createAttendanceIntoDB:", error);
